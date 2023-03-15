@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/methodtest.css">
+    
+    <title>Method Test</title>
+</head>
+<body>
+    <form id="form_">
+        <fieldset>
+            <legend>Form</legend>
+            <label for="record_id">Record ID: </label>
+            <input type="number" name="record_id" id="record_id"><br><br>
+            <label for="article_name">Article Name: </label>
+            <input type="text" name="article_name" id="article_name"><br><br>
+            <label for="article_body">Article Body: </label><br>
+            <input type="textarea" name="article_body" id="article_body"><br><br>
+            <label for="date" hidden="true">Current Date: </label><br>
+            <input type="date" name="date" id="date" hidden="true"><br><br>
+            <hr>
+            <!-- <button id="postBtn" type="submit">Post Button</button> -->
+            <input type="submit" id="postBtn">
+            <button id="getBtn" type="submit" value="get" form="form_">Get Button</button>
+            <button id="putBtn" type="submit" value="put" form="form_">Put Button</button>
+            <button id="deleteBtn" type="submit" value="delete" form="form_">Delete Button</button>
+        </fieldset>
+    </form>
+
+    <output id="output"></output>
+    <script src="js/methodtest.js"></script>
+</body>
+</html>
