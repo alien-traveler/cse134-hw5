@@ -39,6 +39,16 @@
         <button id="deleteBtn">Delete Button</button>
     </div>
     <output id="response"></output>
-    <script src="js/methodtest.js"></script>
+    <script type="module">
+        import {postClick, getClick, putClick, deleteClick} from "./js/methodtest.js";
+        const postBtn = document.getElementById("postBtn");
+        postBtn.addEventListener("click", postClick);
+        const getBtn = document.getElementById("getBtn");
+        getBtn.addEventListener("click", getClick);
+        const putBtn = document.getElementById("putBtn");
+        putBtn.addEventListener("click", putClick);
+        const deleteBtn = document.getElementById("deleteBtn");
+        deleteBtn.addEventListener("click", deleteClick);
+    </script>
 </body>
 </html>

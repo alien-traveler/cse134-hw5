@@ -1,15 +1,20 @@
-const postBtn = document.getElementById("postBtn");
-const getBtn = document.getElementById("getBtn");
-const putBtn = document.getElementById("putBtn");
-const deleteBtn = document.getElementById("deleteBtn");
+// const postBtn = document.getElementById("postBtn");
+// const getBtn = document.getElementById("getBtn");
+// const putBtn = document.getElementById("putBtn");
+// const deleteBtn = document.getElementById("deleteBtn");
 
 const output = document.getElementById("response");
 
 // post
-postBtn.addEventListener("click", ()=>{
-    // clear output
-    clearOutput();
+export function postClick() {
+    // clearOutput();
+    // // fetch
+    // let url = "https://httpbin.org/post";
+    // let data = getFormValues();
+    // let response_obj = fetchPost(url, data);
+    // console.log();
 
+    // XMLHttpRequest
     const xhttp = new XMLHttpRequest();
     let params = getFormValues();
     // console.log(params);
@@ -26,10 +31,31 @@ postBtn.addEventListener("click", ()=>{
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     
     xhttp.send(params);
-});
+}
+
+// Example POST method implementation:
+async function fetchPost(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+  
+//   postData("https://example.com/answer", { answer: 42 }).then((data) => {
+//     console.log(data); // JSON data parsed by `data.json()` call
+//   });
+  
 
 // get
-getBtn.addEventListener("click", ()=> {
+export function getClick() {
     // clear output
     clearOutput();
     
@@ -48,10 +74,30 @@ getBtn.addEventListener("click", ()=> {
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
     
     xhttp.send();
-});
+}
+// getBtn.addEventListener("click", ()=> {
+//     // clear output
+//     clearOutput();
+    
+//     const xhttp = new XMLHttpRequest();
+//     let params = getFormValues();
+//     let url = "https://httpbin.org/get?" + params;
+//     xhttp.open('GET', url, true);
+
+//     xhttp.onreadystatechange = function() {
+//         if (xhttp.readyState === 4 && xhttp.status === 200) {
+//             let response_obj = JSON.parse(xhttp.responseText);
+//             // console.log(this.responseText);
+//             formatResponse(response_obj);
+//         }
+//     };
+//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+    
+//     xhttp.send();
+// });
 
 // put
-putBtn.addEventListener("click", ()=> {
+export function putClick() {
     // clear output
     clearOutput();
     
@@ -70,10 +116,30 @@ putBtn.addEventListener("click", ()=> {
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
     
     xhttp.send();
-});
+}
+// putBtn.addEventListener("click", ()=> {
+//     // clear output
+//     clearOutput();
+    
+//     const xhttp = new XMLHttpRequest();
+//     let params = getFormValues();
+//     let url = "https://httpbin.org/put?" + params;
+//     xhttp.open('PUT', url, true);
+
+//     xhttp.onreadystatechange = function() {
+//         if (xhttp.readyState === 4 && xhttp.status === 200) {
+//             let response_obj = JSON.parse(xhttp.responseText);
+//             // console.log(this.responseText);
+//             formatResponse(response_obj);
+//         }
+//     };
+//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+    
+//     xhttp.send();
+// });
 
 // delete
-deleteBtn.addEventListener("click", ()=> {
+export function deleteClick() {
     // clear output
     clearOutput();
     
@@ -92,7 +158,27 @@ deleteBtn.addEventListener("click", ()=> {
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
     
     xhttp.send();
-});
+}
+// deleteBtn.addEventListener("click", ()=> {
+//     // clear output
+//     clearOutput();
+    
+//     const xhttp = new XMLHttpRequest();
+//     let params = getFormValues();
+//     let url = "https://httpbin.org/delete?" + params;
+//     xhttp.open('DELETE', url, true);
+
+//     xhttp.onreadystatechange = function() {
+//         if (xhttp.readyState === 4 && xhttp.status === 200) {
+//             let response_obj = JSON.parse(xhttp.responseText);
+//             // console.log(this.responseText);
+//             formatResponse(response_obj);
+//         }
+//     };
+//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+    
+//     xhttp.send();
+// });
 
 function clearOutput() {
     output.innerHTML = "";
@@ -117,7 +203,7 @@ function formatResponse(response_obj) {
     let div = document.createElement("div");
     // console.log(response_obj["args"]);
 
-    obj_entries = Object.entries(response_obj);
+    let obj_entries = Object.entries(response_obj);
     // console.log(obj_entries);
     obj_entries.forEach(entry => {
         // console.log(entry);
