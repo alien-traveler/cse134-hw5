@@ -1,184 +1,124 @@
-// const postBtn = document.getElementById("postBtn");
-// const getBtn = document.getElementById("getBtn");
-// const putBtn = document.getElementById("putBtn");
-// const deleteBtn = document.getElementById("deleteBtn");
+const XML_or_fetch = document.getElementById("XMLHttpRequest");
 
 const output = document.getElementById("response");
 
 // post
 export function postClick() {
-    // clearOutput();
-    // // fetch
-    // let url = "https://httpbin.org/post";
-    // let data = getFormValues();
-    // let response_obj = fetchPost(url, data);
-    // console.log();
+    clearOutput();
 
-    // XMLHttpRequest
-    const xhttp = new XMLHttpRequest();
     let params = getFormValues();
-    // console.log(params);
     let url = "https://httpbin.org/post";
-    xhttp.open('POST', url, true);
+    if (XML_or_fetch.checked) {
+        // XMLHttpRequest
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('POST', url, true);
 
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            let response_obj = JSON.parse(this.responseText);
-            // console.log(this.responseText);
-            formatResponse(response_obj);
-        }
-    };
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    
-    xhttp.send(params);
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let response_obj = JSON.parse(this.responseText);
+                // console.log(this.responseText);
+                formatResponse(response_obj);
+            }
+        };
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        
+        xhttp.send(params);
+    } else {
+        // fetch
+        fetchPost(url, { params }).then((data) => {
+            // console.log(data); // JSON data parsed by `data.json()` call
+            formatResponse(data);
+        });
+    }
+
 }
-
-// Example POST method implementation:
-async function fetchPost(url = "", data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
-    return response.json(); // parses JSON response into native JavaScript objects
-  }
-  
-//   postData("https://example.com/answer", { answer: 42 }).then((data) => {
-//     console.log(data); // JSON data parsed by `data.json()` call
-//   });
-  
 
 // get
 export function getClick() {
     // clear output
     clearOutput();
-    
-    const xhttp = new XMLHttpRequest();
+
     let params = getFormValues();
     let url = "https://httpbin.org/get?" + params;
-    xhttp.open('GET', url, true);
+    if (XML_or_fetch.checked) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('GET', url, true);
 
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            let response_obj = JSON.parse(xhttp.responseText);
-            // console.log(this.responseText);
-            formatResponse(response_obj);
-        }
-    };
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                let response_obj = JSON.parse(xhttp.responseText);
+                // console.log(this.responseText);
+                formatResponse(response_obj);
+            }
+        };
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+        xhttp.send();
+    } else {
+        // fetch
+        fetchGet(url, { params }, "GET").then((data) => {
+            // console.log(data); // JSON data parsed by `data.json()` call
+            formatResponse(data);
+        });
+    }
     
-    xhttp.send();
 }
-// getBtn.addEventListener("click", ()=> {
-//     // clear output
-//     clearOutput();
-    
-//     const xhttp = new XMLHttpRequest();
-//     let params = getFormValues();
-//     let url = "https://httpbin.org/get?" + params;
-//     xhttp.open('GET', url, true);
-
-//     xhttp.onreadystatechange = function() {
-//         if (xhttp.readyState === 4 && xhttp.status === 200) {
-//             let response_obj = JSON.parse(xhttp.responseText);
-//             // console.log(this.responseText);
-//             formatResponse(response_obj);
-//         }
-//     };
-//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
-    
-//     xhttp.send();
-// });
 
 // put
 export function putClick() {
     // clear output
     clearOutput();
-    
-    const xhttp = new XMLHttpRequest();
     let params = getFormValues();
     let url = "https://httpbin.org/put?" + params;
-    xhttp.open('PUT', url, true);
 
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            let response_obj = JSON.parse(xhttp.responseText);
-            // console.log(this.responseText);
-            formatResponse(response_obj);
-        }
-    };
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+    if (XML_or_fetch.checked) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('PUT', url, true);
+
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                let response_obj = JSON.parse(xhttp.responseText);
+                // console.log(this.responseText);
+                formatResponse(response_obj);
+            }
+        };
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+        xhttp.send();
+    } else {
+        fetchGet(url, { params }, "PUT").then((data) => {
+            // console.log(data); // JSON data parsed by `data.json()` call
+            formatResponse(data);
+        });
+    }
     
-    xhttp.send();
 }
-// putBtn.addEventListener("click", ()=> {
-//     // clear output
-//     clearOutput();
-    
-//     const xhttp = new XMLHttpRequest();
-//     let params = getFormValues();
-//     let url = "https://httpbin.org/put?" + params;
-//     xhttp.open('PUT', url, true);
-
-//     xhttp.onreadystatechange = function() {
-//         if (xhttp.readyState === 4 && xhttp.status === 200) {
-//             let response_obj = JSON.parse(xhttp.responseText);
-//             // console.log(this.responseText);
-//             formatResponse(response_obj);
-//         }
-//     };
-//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
-    
-//     xhttp.send();
-// });
 
 // delete
 export function deleteClick() {
     // clear output
     clearOutput();
-    
-    const xhttp = new XMLHttpRequest();
     let params = getFormValues();
     let url = "https://httpbin.org/delete?" + params;
-    xhttp.open('DELETE', url, true);
 
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            let response_obj = JSON.parse(xhttp.responseText);
-            // console.log(this.responseText);
-            formatResponse(response_obj);
-        }
-    };
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+    if (XML_or_fetch.checked) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('DELETE', url, true);
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                let response_obj = JSON.parse(xhttp.responseText);
+                // console.log(this.responseText);
+                formatResponse(response_obj);
+            }
+        };
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
+        xhttp.send();
+    } else {
+        fetchGet(url, { params }, "DELETE").then((data) => {
+            // console.log(data); // JSON data parsed by `data.json()` call
+            formatResponse(data);
+        });
+    }
     
-    xhttp.send();
 }
-// deleteBtn.addEventListener("click", ()=> {
-//     // clear output
-//     clearOutput();
-    
-//     const xhttp = new XMLHttpRequest();
-//     let params = getFormValues();
-//     let url = "https://httpbin.org/delete?" + params;
-//     xhttp.open('DELETE', url, true);
-
-//     xhttp.onreadystatechange = function() {
-//         if (xhttp.readyState === 4 && xhttp.status === 200) {
-//             let response_obj = JSON.parse(xhttp.responseText);
-//             // console.log(this.responseText);
-//             formatResponse(response_obj);
-//         }
-//     };
-//     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', true);
-    
-//     xhttp.send();
-// });
 
 function clearOutput() {
     output.innerHTML = "";
@@ -261,4 +201,33 @@ function isObj(A) {
     } else {
         return false;
     }
+}
+
+// POST method implementation:
+async function fetchPost(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
+// Get method implementation:
+async function fetchGet(url = "", data = {}, method_) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: method_, // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
 }
